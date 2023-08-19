@@ -4,8 +4,7 @@ import com.piotrgrochowiecki.entitiy.Person;
 
 import java.util.Comparator;
 import java.util.Random;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 import java.util.random.RandomGenerator;
 import java.util.random.RandomGeneratorFactory;
 
@@ -27,4 +26,18 @@ public class PersonService {
 
         return new Person(name, age, address);
     };
+
+    BiFunction<Person, Person, Double> averageAgeOfTwoPeopleFunction = (p1, p2) -> (double) (Math.addExact(p1.getAge(), p2.getAge())/ 2);
+
+    BiConsumer<Person, Person> swapPeoplesNamesConsumer = (person1, person2) -> {
+        String personOneName = person1.getName();
+        String personTwoName = person2.getName();
+        person1.setName(personTwoName);
+        person2.setName(personOneName);
+    };
+
+    ToLongBiFunction<Person, Person> differenceInPeoplesAgeFunction = ((person1, person2) -> Math.abs(person1.getAge() - person2.getAge()));
+
+    ObjIntConsumer<Person> setPersonAgeConsumer = (person, age) -> person.setAge(age);
+
 }

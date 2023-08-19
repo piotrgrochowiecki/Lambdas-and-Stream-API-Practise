@@ -6,6 +6,18 @@ public class Book {
     private String author;
     private int yearPublished;
 
+    private double price;
+
+    public Book() {
+    }
+
+    public Book(String title, String author, int yearPublished, double price) {
+        this.title = title;
+        this.author = author;
+        this.yearPublished = yearPublished;
+        this.price = price;
+    }
+
     public Book(String title, String author, int yearPublished) {
         this.title = title;
         this.author = author;
@@ -18,8 +30,17 @@ public class Book {
         if (!(o instanceof Book book)) return false;
 
         if (getYearPublished() != book.getYearPublished()) return false;
+        if (Double.compare(getPrice(), book.getPrice()) != 0) return false;
         if (getTitle() != null ? !getTitle().equals(book.getTitle()) : book.getTitle() != null) return false;
         return getAuthor() != null ? getAuthor().equals(book.getAuthor()) : book.getAuthor() == null;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
