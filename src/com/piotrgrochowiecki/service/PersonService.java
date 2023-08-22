@@ -1,12 +1,16 @@
 package com.piotrgrochowiecki.service;
 
+import com.piotrgrochowiecki.entitiy.Book;
 import com.piotrgrochowiecki.entitiy.Person;
 
 import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.function.*;
 import java.util.random.RandomGenerator;
 import java.util.random.RandomGeneratorFactory;
+import java.util.stream.Collectors;
 
 public class PersonService {
 
@@ -40,4 +44,24 @@ public class PersonService {
 
     ObjIntConsumer<Person> setPersonAgeConsumer = (person, age) -> person.setAge(age);
 
+    public double getAverageAgeOfPeopleWhoseNameStartsWithA(List<Person> inputList) {
+        return inputList.stream()
+                .filter(p -> p.getName().startsWith("A"))
+                .mapToDouble(Person::getAge)
+                .average()
+                .orElse(0.0);
+    }
+
+    public Map<String, Integer> getMapOfPeopleWithNamesAndAges(List<Person> inputList) {
+        return inputList.stream()
+                .collect((Collectors.toMap(Person::getName, Person::getAge)));
+    }
+
+    public Double getAverageAgeOfPeopleWhoseAddressContainsStreet(List<Person> inputList) {
+        return inputList.stream()
+                .filter(person -> person.getAddress().contains("Street"))
+                .mapToDouble(Person::getAge)
+                .average()
+                .orElse(0.0);
+    }
 }

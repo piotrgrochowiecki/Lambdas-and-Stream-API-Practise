@@ -1,7 +1,9 @@
 package com.piotrgrochowiecki.service;
 
+import com.piotrgrochowiecki.entitiy.Book;
 import com.piotrgrochowiecki.entitiy.Movie;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -29,4 +31,13 @@ public class MovieService {
 
     Function<List<Movie>, Map<String, Double>> getMapOfTitlesAndRatings = movies -> movies.stream()
             .collect(Collectors.toMap(Movie::getTitle, Movie::getRating));
+
+    Comparator<Book> bookByYearPublishedComparator = (b1, b2) -> b2.getYearPublished() - b1.getYearPublished();
+
+    public List<String> getBookSortedByYearPublishedInUpperCase(List<Book> inputList) {
+        return inputList.stream()
+                .sorted(bookByYearPublishedComparator)
+                .map(b -> b.getTitle().toUpperCase())
+                .collect(Collectors.toList());
+    }
 }

@@ -4,8 +4,9 @@ import com.piotrgrochowiecki.entitiy.Book;
 import com.piotrgrochowiecki.entitiy.Person;
 
 import java.time.LocalDate;
-import java.util.ConcurrentModificationException;
+import java.util.*;
 import java.util.function.*;
+import java.util.stream.Collectors;
 
 public class BookService {
 
@@ -31,4 +32,17 @@ public class BookService {
     ToDoubleFunction<Book> averageLengthOfTheTitleAndAuthorFunction = b -> (double) (Math.addExact(b.getTitle().length(), b.getAuthor().length())) /2;
 
     ObjDoubleConsumer<Book> increaseBookPriceByPercentConsumer = ((book, value) -> book.setPrice((book.getPrice()) * (1 + (value/100))));
+
+    public Book getBookWithHighestNumberOfPages(List<Book> inputList) {
+        return inputList.stream()
+                .max(Comparator.comparingInt(Book::getPages))
+                .orElse(null);
+    }
+
+    public Map<String, List<Book>> getMapOfAuthorsAndTheirBooksSortedByYearPublishedAsc(List<Book> inputList) {
+        return inputList.stream()
+                .collect(Collectors.groupingBy(Book::getAuthor, Collectors.collectingAndThen(Collectors.toList(), books -> books.stream()
+                        .sorted((b1, b2) -> b2.getYearPublished() - b1.getYearPublished())
+                        .collect(Collectors.toList()))));
+    }
 }
