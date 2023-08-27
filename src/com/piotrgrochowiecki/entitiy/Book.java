@@ -1,5 +1,7 @@
 package com.piotrgrochowiecki.entitiy;
 
+import java.util.List;
+
 public class Book {
 
     private String title;
@@ -9,6 +11,26 @@ public class Book {
     private double price;
 
     private int pages;
+
+    private List<String> genres;
+
+    private double rating;
+
+    public List<String> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
 
     public int getPages() {
         return pages;

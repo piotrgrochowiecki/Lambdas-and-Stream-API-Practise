@@ -64,4 +64,13 @@ public class PersonService {
                 .average()
                 .orElse(0.0);
     }
+
+    public List<String> getNamesOfPeopleWhoAreOver18AndNameStartsWithL(List<Person> inputList) {
+        return inputList.stream()
+                .filter(p -> p.getAge() > 18)
+                .filter(p -> p.getAddress().startsWith("L"))
+                .sorted(Comparator.comparingInt(Person::getAge))
+                .map(Person::getName)
+                .collect(Collectors.toList());
+    }
 }
